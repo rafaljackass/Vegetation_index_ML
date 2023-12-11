@@ -5,9 +5,9 @@ from osgeo import ogr
 import pyproj
 
 
-path_wektor = 'D:/NN_builder/wektory/dab_153_LSW.shp'
+path_wektor = 'D:/NN_builder/wektory/sosna_58_BMSW_B.shp'
 path_raster = 'D:/NN_builder/raster/N_33_131_A_c_4_1.tif'
-output_path = 'D:/NN_builder/output/db_153/'
+
 
 # Otwórz warstwę wektorową z wielokątami
 vector_ds = ogr.Open(path_wektor)
@@ -30,5 +30,5 @@ for i in range(layer.GetFeatureCount()):
                                     cropToCutline=True)
 
     # Przycięcie obrazu rastrowego
-    out_file = 'D:/NN_builder/output/db_153/{}.tif'.format(name)
+    out_file = 'D:/NN_builder/output/sosna_58/{}.tif'.format(name)
     gdal.Warp(out_file, path_raster, options=warp_options)

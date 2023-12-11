@@ -2,12 +2,16 @@ import rasterio
 import pandas as pd
 import glob
 import numpy as np
+import time
 
 # Lista rastrów do przetworzenia
-raster_list = glob.glob('D:/NN_builder/output/db_159/*.tif')
+raster_list = glob.glob('D:/NN_builder/output/sosna_58/*.tif')
 
 # Tworzenie pustego dataframe'u do przechowywania wyników
 results_df = pd.DataFrame()
+
+# Rozpoczęcie pomiaru czasu
+start_time = time.time()
 
 # Pętla przez rastry
 for raster_path in raster_list:
@@ -34,5 +38,13 @@ for raster_path in raster_list:
         # Łączenie wyniku z dataframe'em wyników
         results_df = pd.concat([results_df, df])
 
+# Zakończenie pomiaru czasu
+end_time = time.time()
+
+# Obliczenie czasu wykonania
+execution_time = end_time - start_time
+
+print(f"Czas wykonania: {execution_time} sekund")
+
 # Zapisanie wyników do pliku CSV
-results_df.to_csv('D:/NN_builder/output/db_159/wyniki_statystyk.csv', index=False)
+results_df.to_csv('D:/NN_builder/output/sosna_58/wyniki_statystyk.csv', index=False)
