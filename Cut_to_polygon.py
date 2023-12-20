@@ -14,7 +14,7 @@ def crop_raster_with_vector(input_vector, input_raster, output_dir):
         feature = layer.GetFeature(i)
 
         # Pobierz nazwę z tabeli atrybutów
-        name = feature.GetField('id')
+        name = feature.GetField('arodes_int')
 
         # Utwórz warunek przycinania
         geom = feature.GetGeometryRef()
@@ -28,7 +28,7 @@ def crop_raster_with_vector(input_vector, input_raster, output_dir):
         warp_options = gdal.WarpOptions(
             outputBounds=[xmin, ymin, xmax, ymax],
             cutlineDSName=input_vector,
-            cutlineWhere=f"id='{name}'",
+            cutlineWhere=f"arodes_int='{name}'",
             cropToCutline=True
         )
 
