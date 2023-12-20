@@ -8,7 +8,7 @@ import time
 
 def crop_raster_for_feature(feature, input_raster, output_dir):
     # Pobierz nazwę z tabeli atrybutów
-    name = feature.GetField('arodes_int')
+    name = feature.GetField('id')
 
     # Utwórz warunek przycinania
     geom = feature.GetGeometryRef()
@@ -22,7 +22,7 @@ def crop_raster_for_feature(feature, input_raster, output_dir):
     warp_options = gdal.WarpOptions(
         outputBounds=[xmin, ymin, xmax, ymax],
         cutlineDSName=input_vector,
-        cutlineWhere=f"arodes_int='{name}'",
+        cutlineWhere=f"id='{name}'",
         cropToCutline=True
     )
 
