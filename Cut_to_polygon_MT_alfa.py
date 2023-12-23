@@ -23,7 +23,8 @@ def crop_raster_for_feature(feature, input_raster, output_dir):
         outputBounds=[xmin, ymin, xmax, ymax],
         cutlineDSName=input_vector,
         cutlineWhere=f"arodes_int='{name}'",
-        cropToCutline=True
+        cropToCutline=True,
+        creationOptions=["ALPHA=YES"]  # Dodaj kanał alfa dla pikseli poza obszarem maski
     )
 
     # Przycięcie obrazu rastrowego
@@ -44,6 +45,8 @@ def crop_raster_with_vector(input_vector, input_raster, output_dir):
         # Poczekaj na zakończenie wszystkich wątków
         for future in futures:
             future.result()
+
+# Pozostała część kodu pozostaje bez zmian
 
 # Tworzymy GUI z pomocą tkinter
 root = tk.Tk()

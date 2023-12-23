@@ -3,8 +3,7 @@ import pandas as pd
 import glob
 import numpy as np
 import os
-import time  # Dodaj ten import!
-
+import time
 import tkinter as tk
 from tkinter import filedialog
 
@@ -20,13 +19,22 @@ def calculate_raster_statistics(input_folder, output_csv):
     for raster_path in raster_list:
         with rasterio.open(raster_path) as src:
             raster = src.read(1)
+            alpha = src.read_masks(1)
+
+            # Sprawdź, czy dane wejściowe mają kanał alfa (maskę)
+            if alpha is None:
+                print(f"Plik {raster_path} nie zawiera kanału alfa. Pomijam.")
+                continue
+
+            # Filtrowanie pikseli na podstawie wartości kanału alfa
+            raster = np.where(alpha != 0, raster, np.nan)
 
             # Obliczanie statystyk
-            min_val = np.min(raster)
-            max_val = np.max(raster)
-            mean_val = np.mean(raster)
-            std_val = np.std(raster)
-            count_val = np.count_nonzero(~np.isnan(raster))
+            min_val = np.nanmin(raster)
+            max_val = np.nanmax(raster)
+            mean_val = np.nanmean(raster)
+            std_val = np.nanstd(raster)
+            count_val = np.sum(~np.isnan(raster))
 
             # Tworzenie dataframe'u ze statystykami
             df = pd.DataFrame({
@@ -36,7 +44,6 @@ def calculate_raster_statistics(input_folder, output_csv):
                 'Max': [max_val],
                 'Mean': [mean_val],
                 'Std': [std_val]
-
             })
 
             # Łączenie wyniku z dataframe'em wyników
@@ -47,6 +54,8 @@ def calculate_raster_statistics(input_folder, output_csv):
     elapsed_time = time.time() - start_time  # Czas trwania obliczeń
     print(f"Wyniki zostały zapisane do: {output_csv}")
     print(f"Czas trwania obliczeń: {elapsed_time:.2f} sekundy")
+
+# Pozostała część kodu pozostaje bez zmian
 
 # Tworzymy GUI z pomocą tkinter
 root = tk.Tk()
