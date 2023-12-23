@@ -1,3 +1,26 @@
+"""
+Program ten jest narzędziem do obliczania różnych indeksów wegetacyjnych
+ na podstawie obrazu satelitarnego w formacie TIFF. Indeksy wegetacyjne,
+ takie jak NDVI (Normalized Difference Vegetation Index),
+ MSAVI (Modified Soil Adjusted Vegetation Index)
+  czy ATSAVI (Adjusted Transformed Soil Adjusted Vegetation Index),
+  są używane do analizy zdrowia roślin, pokrycia roślinności, czy oceny warunków uprawnych.
+
+Ogólna struktura programu to:
+    Program inicjuje interfejs użytkownika przy użyciu biblioteki Tkinter,
+    aby umożliwić użytkownikowi wybór pliku wejściowego (obrazu satelitarnego w formacie TIFF)
+    oraz określenie nazwy i lokalizacji pliku wynikowego.
+    Użytkownik jest następnie pytany o wybór typu indeksu wegetacyjnego (NDVI, MSAVI, ATSAVI).
+    Na podstawie wyboru użytkownika, program wybiera odpowiednią funkcję obliczającą dany indeks wegetacyjny
+    (calculate_ndvi, calculate_msavi, calculate_atsavi).
+    Program wczytuje obraz satelitarny, dzieli go na składowe
+    (na przykład, dla obrazu RGB - czerwony i podczerwony),
+    oblicza wybrany indeks wegetacyjny, a następnie zapisuje wynikowy obraz indeksu do pliku TIFF.
+    Program informuje użytkownika o czasie trwania operacji.
+W skrócie, program ten służy do przetwarzania obrazów satelitarnych w celu obliczenia i zapisania indeksów wegetacyjnych, które mogą być używane do analizy terenów rolniczych, leśnych, czy innych obszarów z roślinnością.
+"""
+
+
 import os
 from osgeo import gdal
 import tkinter as tk
